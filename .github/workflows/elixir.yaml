@@ -35,13 +35,13 @@ jobs:
           --health-retries 5
 
     runs-on: ubuntu-latest
-    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    name: CI
     strategy:
       # Specify the OTP and Elixir versions to use when building
       # and running the workflow steps.
-      matrix:
-        otp: ["25.0.4"] # Define the OTP version [required]
-        elixir: ["1.14.1"] # Define the elixir version [required]
+      # matrix:
+      #   otp: ["25.0.4"] # Define the OTP version [required]
+      #   elixir: ["1.14.1"] # Define the elixir version [required]
     steps:
       # Step: Setup Elixir + Erlang image as the base.
       - name: Set up Elixir

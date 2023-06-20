@@ -12,6 +12,7 @@ services = []
 
 [env]
   PHX_HOST = "spotify-re-discoverer.fly.dev"
+  PHX_SERVER = "true"
   PORT = "8080"
   PRIMARY_REGION = "yyz"
 

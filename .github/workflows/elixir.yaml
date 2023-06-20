@@ -48,7 +48,7 @@ jobs:
         uses: erlef/setup-beam@v1
         with:
           version-type: strict # required to be 'strict' if you want to use the version-file setting (see action docs)
-          version-file: ".tool-versions"
+          version-file: "../../.tool-versions"
 
       # Step: Check out the code.
       - name: Checkout code

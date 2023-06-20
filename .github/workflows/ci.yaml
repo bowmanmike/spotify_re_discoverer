@@ -116,3 +116,13 @@ jobs:
       # Step: Execute the tests.
       - name: Run tests
         run: mix test
+
+  deploy:
+    needs: [test]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: superfly/flyctl-actions@1.1
+        with:
+          args: "deploy"

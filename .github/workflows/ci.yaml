@@ -47,8 +47,10 @@ jobs:
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
-          version-type: strict # required to be 'strict' if you want to use the version-file setting (see action docs)
-          version-file: "../.tool-versions"
+          otp: "26.0"
+          elixir: "1.15.0"
+          # version-type: strict # required to be 'strict' if you want to use the version-file setting (see action docs)
+          # version-file: "./.tool-versions"
 
       # Step: Check out the code.
       - name: Checkout code

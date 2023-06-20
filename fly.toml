@@ -1,0 +1,21 @@
+# fly.toml file generated for spotify-re-discoverer on 2023-06-20T17:12:21-04:00
+
+app = "spotify-re-discoverer"
+kill_signal = "SIGTERM"
+kill_timeout = 5
+primary_region = "yyz"
+processes = []
+services = []
+
+[deploy]
+  release_command = "/app/bin/migrate"
+
+[env]
+  PHX_HOST = "spotify-re-discoverer.fly.dev"
+  PORT = "8080"
+  PRIMARY_REGION = "yyz"
+
+[experimental]
+  cmd = []
+  entrypoint = []
+  exec = []

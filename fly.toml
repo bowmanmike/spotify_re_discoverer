@@ -1,11 +1,12 @@
-# fly.toml file generated for spotify-re-discoverer on 2023-06-20T17:12:21-04:00
+# fly.toml app configuration file generated for spotify-re-discoverer on 2023-06-20T20:28:28-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "spotify-re-discoverer"
-kill_signal = "SIGTERM"
-kill_timeout = 5
 primary_region = "yyz"
-processes = []
-services = []
+kill_signal = "SIGTERM"
+kill_timeout = "5s"
 
 [deploy]
   release_command = "/app/bin/migrate"
@@ -15,8 +16,3 @@ services = []
   PHX_SERVER = "true"
   PORT = "8080"
   PRIMARY_REGION = "yyz"
-
-[experimental]
-  cmd = []
-  entrypoint = []
-  exec = []

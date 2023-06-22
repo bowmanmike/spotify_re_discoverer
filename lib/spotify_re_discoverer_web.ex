@@ -55,6 +55,7 @@ defmodule SpotifyReDiscovererWeb do
         layout: {SpotifyReDiscovererWeb.Layouts, :app}
 
       unquote(html_helpers())
+      unquote(live_view_helpers())
     end
   end
 
@@ -63,6 +64,7 @@ defmodule SpotifyReDiscovererWeb do
       use Phoenix.LiveComponent
 
       unquote(html_helpers())
+      unquote(live_view_helpers())
     end
   end
 
@@ -92,6 +94,14 @@ defmodule SpotifyReDiscovererWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
+    end
+  end
+
+  def live_view_helpers do
+    quote do
+      def noreply(%Phoenix.LiveView.Socket{} = socket), do: {:noreply, socket}
+
+      def reply_ok(%Phoenix.LiveView.Socket{} = socket), do: {:ok, socket}
     end
   end
 

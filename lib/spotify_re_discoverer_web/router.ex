@@ -20,7 +20,8 @@ defmodule SpotifyReDiscovererWeb.Router do
   scope "/", SpotifyReDiscovererWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/", DashboardLive
   end
 
   # Other scopes may use custom stacks.

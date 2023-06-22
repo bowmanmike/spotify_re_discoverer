@@ -59,10 +59,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :spotify_re_discoverer, :spotify,
-  client_id: System.fetch_env!("SPOTIFY_CLIENT_ID"),
-  client_secret: System.fetch_env!("SPOTIFY_CLIENT_SECRET")
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

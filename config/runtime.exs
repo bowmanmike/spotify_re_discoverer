@@ -113,3 +113,7 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
+
+config :spotify_re_discoverer, :spotify,
+  client_id: System.fetch_env("SPOTIFY_CLIENT_ID"),
+  client_secret: System.fetch_env("SPOTIFY_CLIENT_SECRET")

@@ -3,16 +3,20 @@ defmodule SpotifyReDiscoverer.SpotifyFixtures do
   This module defines test helpers for creating
   entities via the `SpotifyReDiscoverer.Spotify` context.
   """
+  alias SpotifyReDiscoverer.AccountsFixtures
 
   @doc """
   Generate a credentials.
   """
   def credentials_fixture(attrs \\ %{}) do
+    user = AccountsFixtures.user_fixture()
+
     {:ok, credentials} =
       attrs
       |> Enum.into(%{
         access_token: "some access_token",
-        refresh_token: "some refresh_token"
+        refresh_token: "some refresh_token",
+        user_id: user.id
       })
       |> SpotifyReDiscoverer.Spotify.create_credentials()
 

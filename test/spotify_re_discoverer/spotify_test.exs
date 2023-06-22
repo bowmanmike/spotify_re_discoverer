@@ -6,9 +6,9 @@ defmodule SpotifyReDiscoverer.SpotifyTest do
   describe "spotify_credentials" do
     alias SpotifyReDiscoverer.Spotify.Credentials
 
-    import SpotifyReDiscoverer.SpotifyFixtures
+    import SpotifyReDiscoverer.{AccountsFixtures, SpotifyFixtures}
 
-    @invalid_attrs %{access_token: nil, refresh_token: nil}
+    @invalid_attrs %{access_token: nil, refresh_token: nil, user_id: nil}
 
     test "list_spotify_credentials/0 returns all spotify_credentials" do
       credentials = credentials_fixture()
@@ -21,7 +21,13 @@ defmodule SpotifyReDiscoverer.SpotifyTest do
     end
 
     test "create_credentials/1 with valid data creates a credentials" do
-      valid_attrs = %{access_token: "some access_token", refresh_token: "some refresh_token"}
+      user = user_fixture()
+
+      valid_attrs = %{
+        access_token: "some access_token",
+        refresh_token: "some refresh_token",
+        user_id: user.id
+      }
 
       assert {:ok, %Credentials{} = credentials} = Spotify.create_credentials(valid_attrs)
       assert credentials.access_token == "some access_token"
@@ -34,9 +40,15 @@ defmodule SpotifyReDiscoverer.SpotifyTest do
 
     test "update_credentials/2 with valid data updates the credentials" do
       credentials = credentials_fixture()
-      update_attrs = %{access_token: "some updated access_token", refresh_token: "some updated refresh_token"}
 
-      assert {:ok, %Credentials{} = credentials} = Spotify.update_credentials(credentials, update_attrs)
+      update_attrs = %{
+        access_token: "some updated access_token",
+        refresh_token: "some updated refresh_token"
+      }
+
+      assert {:ok, %Credentials{} = credentials} =
+               Spotify.update_credentials(credentials, update_attrs)
+
       assert credentials.access_token == "some updated access_token"
       assert credentials.refresh_token == "some updated refresh_token"
     end

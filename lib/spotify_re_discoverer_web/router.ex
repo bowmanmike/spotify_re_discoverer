@@ -36,14 +36,30 @@ defmodule SpotifyReDiscovererWeb.Router do
     # If your application does not have an admins-only section yet,
     # you can use Plug.BasicAuth to set up some basic authentication
     # as long as you are also using SSL (which you should anyway).
-    import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: SpotifyReDiscovererWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  import Phoenix.LiveDashboard.Router
+
+  scope "/" do
+    if Mix.env() in [:dev, :test] do
+      pipe_through :browser
+    else
+      pipe_through [:browser, :admins_only]
+    end
+
+    live_dashboard "/dashboard", metrics: HomepageWeb.Telemetry
+  end
+
+  defp admin_basic_auth(conn, _opts) do
+    username = System.fetch_env!("AUTH_USERNAME")
+    password = System.fetch_env!("AUTH_PASSWORD")
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
   end
 
   ## Authentication routes

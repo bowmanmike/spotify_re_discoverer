@@ -6,7 +6,7 @@ defmodule SpotifyReDiscoverer.Repo.Migrations.CreateSpotifyCredentials do
       add :id, :binary_id, primary_key: true
       add :access_token, :string
       add :refresh_token, :string
-      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
+      add :user_id, references(:users, on_delete: :nothing, type: :binary_id), null: false
 
       timestamps()
     end

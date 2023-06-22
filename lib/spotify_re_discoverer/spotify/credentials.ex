@@ -16,7 +16,7 @@ defmodule SpotifyReDiscoverer.Spotify.Credentials do
   def changeset(credentials, attrs) do
     credentials
     |> cast(attrs, [:access_token, :refresh_token])
-    |> validate_required([:access_token, :refresh_token])
+    |> validate_required([:access_token, :refresh_token, :user_id])
     |> unique_constraint(:user_id)
   end
 end

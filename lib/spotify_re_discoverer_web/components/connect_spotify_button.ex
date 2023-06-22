@@ -3,6 +3,8 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
 
   import SpotifyReDiscovererWeb.CoreComponents
 
+  alias SpotifyReDiscoverer.Spotify.Client
+
   def render(assigns) do
     ~H"""
     <div>
@@ -19,6 +21,9 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
   end
 
   def handle_event("click", _params, socket) do
+    # Task.async(fn -> Client.authenticate() end)
+    Client.authenticate()
+
     socket
     |> update(:count, &(&1 + 1))
     |> noreply()

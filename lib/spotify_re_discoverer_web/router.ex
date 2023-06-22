@@ -17,6 +17,10 @@ defmodule SpotifyReDiscovererWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admins_only do
+    plug :admin_basic_auth
+  end
+
   scope "/", SpotifyReDiscovererWeb do
     pipe_through :browser
 

@@ -9,7 +9,8 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
     ~H"""
     <div>
       <p>Count: <%= @count %></p>
-      <.button type="button" phx-click="click" phx-target={@myself}>Connect To Spotify</.button>
+      <.button type="button" phx-click="click" phx-target={@myself}>Counter</.button>
+      <.button type="button" phx-click="connect" phx-target={@myself}>Connect To Spotify</.button>
     </div>
     """
   end
@@ -21,11 +22,16 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
   end
 
   def handle_event("click", _params, socket) do
-    # Task.async(fn -> Client.authenticate() end)
-    Client.authenticate()
-
     socket
     |> update(:count, &(&1 + 1))
+    |> noreply()
+  end
+
+  def handle_event("connect", _params, socket) do
+    IO.puts(Client.authorize_url())
+
+    socket
+    |> redirect(external: Client.authorize_url())
     |> noreply()
   end
 end

@@ -17,7 +17,7 @@ defmodule SpotifyReDiscoverer.SpotifyFixtures do
         access_token: "some access_token",
         refresh_token: "some refresh_token",
         user_id: user.id,
-        expires: 3600,
+        expires_in: 3600,
         scope: "some-scope another-scope",
         token_type: "Bearer"
       })

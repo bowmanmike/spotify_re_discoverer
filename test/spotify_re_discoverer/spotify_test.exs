@@ -26,7 +26,7 @@ defmodule SpotifyReDiscoverer.SpotifyTest do
       valid_attrs = %{
         access_token: "some access_token",
         refresh_token: "some refresh_token",
-        expires: 3600,
+        expires_in: 3600,
         scope: "some-scope another-scope",
         token_type: "Bearer",
         user_id: user.id

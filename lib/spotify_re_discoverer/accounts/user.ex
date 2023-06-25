@@ -9,6 +9,8 @@ defmodule SpotifyReDiscoverer.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    has_one(:spotify_credentials, SpotifyReDiscoverer.Spotify.Credentials)
+
     timestamps()
   end
 

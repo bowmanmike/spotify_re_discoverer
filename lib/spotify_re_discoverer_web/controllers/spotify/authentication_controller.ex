@@ -23,6 +23,7 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
 
     resp = Client.exchange_code_for_tokens(code)
 
+    # doesn't work if credentials already exist
     Spotify.create_credentials(Map.merge(resp.body, %{"user_id" => conn.assigns.current_user.id}))
 
     conn

@@ -14,8 +14,7 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
     end
   end
 
-  def authorize(conn, %{"code" => code, "state" => state} = params) do
-    IO.inspect(params, label: :code_and_state_params)
+  def authorize(conn, %{"code" => code, "state" => _state} = _params) do
     # params contains `code` and `state`
     # `state` should match the random string sent to spotify initially
     #    -> should we save it in the DB? Or like use an actor, since its ephemeral
@@ -23,12 +22,8 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
     #        I don't need to go back to the live view
 
     resp = Client.exchange_code_for_tokens(code)
-    IO.inspect(resp, label: :spotify_auth_tokens)
 
-    r =
-      Spotify.create_credentials(
-        Map.merge(resp.body, %{"user_id" => conn.assigns.current_user.id})
-      )
+    Spotify.create_credentials(Map.merge(resp.body, %{"user_id" => conn.assigns.current_user.id}))
 
     conn
     |> put_flash(:info, "Authentication Successful!")

@@ -17,5 +17,16 @@ config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: SpotifyReDiscove
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :sentry,
+  dsn:
+    "https://0d79f5f65cfd439ebf972741ae2f1f15@o4505422425948160.ingest.sentry.io/4505422428372992",
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{
+    env: "production"
+  },
+  included_environments: [:prod]
+
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.

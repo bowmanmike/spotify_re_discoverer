@@ -7,6 +7,8 @@ defmodule SpotifyReDiscoverer.Application do
 
   @impl true
   def start(_type, _args) do
+    LoggerBackends.add(Sentry.LoggerBackend)
+
     children = [
       # Start the Telemetry supervisor
       SpotifyReDiscovererWeb.Telemetry,

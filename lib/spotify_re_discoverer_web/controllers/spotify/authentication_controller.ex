@@ -30,11 +30,8 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
         Map.merge(resp.body, %{"user_id" => conn.assigns.current_user.id})
       )
 
-    require IEx
-    IEx.pry()
-
     conn
-    |> put_flash(:info, "Authentication In Progress")
+    |> put_flash(:info, "Authentication Successful!")
     |> redirect(to: ~p"/")
   end
 

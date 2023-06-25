@@ -7,10 +7,11 @@ defmodule SpotifyReDiscoverer.Spotify.Credentials do
   schema "spotify_credentials" do
     field :access_token, :string
     field :refresh_token, :string
-    field :user_id, :binary_id
     field :expires_in, :integer
     field :scope, :string
     field :token_type, :string
+
+    belongs_to(:user, SpotifyReDiscoverer.Accounts.User)
 
     timestamps()
   end

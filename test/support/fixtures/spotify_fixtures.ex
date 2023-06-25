@@ -16,7 +16,10 @@ defmodule SpotifyReDiscoverer.SpotifyFixtures do
       |> Enum.into(%{
         access_token: "some access_token",
         refresh_token: "some refresh_token",
-        user_id: user.id
+        user_id: user.id,
+        expires: 3600,
+        scope: "some-scope another-scope",
+        token_type: "Bearer"
       })
       |> SpotifyReDiscoverer.Spotify.create_credentials()
 

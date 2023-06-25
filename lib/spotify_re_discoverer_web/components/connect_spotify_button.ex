@@ -10,7 +10,9 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
     <div>
       <p>Count: <%= @count %></p>
       <.button type="button" phx-click="click" phx-target={@myself}>Counter</.button>
-      <.button type="button" phx-click="connect" phx-target={@myself}>Connect To Spotify</.button>
+      <.link navigate={Client.authorize_url()}>
+        <.button type="button">Connect To Spotify</.button>
+      </.link>
     </div>
     """
   end

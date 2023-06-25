@@ -95,8 +95,7 @@ defmodule SpotifyReDiscovererWeb.Router do
   scope "/spotify", SpotifyReDiscovererWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/authorize", Spotify.AuthenticationController, :authorize
-    get "/authenticated", Spotify.AuthenticationController, :authenticated
+    get "/callback", Spotify.AuthenticationController, :callback
   end
 
   scope "/", SpotifyReDiscovererWeb do

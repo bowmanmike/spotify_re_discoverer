@@ -6,8 +6,8 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
   end
 
   def exchange_code_for_tokens(code) do
-    req = Req.new()
-    # token_url() |> Req.post!(body: token_form_data(code), headers: token_headers())
+    # req = Req.new()
+    token_url() |> Req.post!(form: token_form_data(code), headers: token_headers())
   end
 
   def secure_random_string do
@@ -23,7 +23,7 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
       query:
         URI.encode_query(%{
           client_id: client_id(),
-          redirect_uri: "http://localhost:4000/spotify/authorize",
+          redirect_uri: "http://localhost:4000/spotify/callback",
           response_type: "code",
           state: secure_random_string(),
           scope: Enum.join(scopes(), " ")
@@ -42,12 +42,14 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
   end
 
   def token_form_data(code) do
+    redirect_uri = "http://localhost:4000/spotify/callback"
+
     %{
       code: code,
-      redirect_uri: "http://localhost:4000/spotify/authenticated",
+      redirect_uri: redirect_uri,
       grant_type: "authorization_code"
     }
-    |> URI.encode_query(:www_form)
+    |> IO.inspect(label: :token_form_data)
   end
 
   def token_headers do

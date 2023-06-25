@@ -8,6 +8,9 @@ import Config
 config :spotify_re_discoverer, SpotifyReDiscovererWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :spotify_re_discoverer, :spotify,
+  redirect_uri: "https://spotify-re-discoverer.fly.dev/spotify/callback"
+
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: SpotifyReDiscoverer.Finch
 

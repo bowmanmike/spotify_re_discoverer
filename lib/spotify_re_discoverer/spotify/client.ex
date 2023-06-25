@@ -6,7 +6,6 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
   end
 
   def exchange_code_for_tokens(code) do
-    # req = Req.new()
     token_url() |> Req.post!(form: token_form_data(code), headers: token_headers())
   end
 
@@ -23,7 +22,7 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
       query:
         URI.encode_query(%{
           client_id: client_id(),
-          redirect_uri: "http://localhost:4000/spotify/callback",
+          redirect_uri: redirect_uri(),
           response_type: "code",
           state: secure_random_string(),
           scope: Enum.join(scopes(), " ")
@@ -42,14 +41,11 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
   end
 
   def token_form_data(code) do
-    redirect_uri = "http://localhost:4000/spotify/callback"
-
     %{
       code: code,
-      redirect_uri: redirect_uri,
+      redirect_uri: redirect_uri(),
       grant_type: "authorization_code"
     }
-    |> IO.inspect(label: :token_form_data)
   end
 
   def token_headers do
@@ -70,8 +66,10 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
     ]
   end
 
-  def client_id, do: Application.get_env(:spotify_re_discoverer, :spotify)[:client_id]
-  def client_secret, do: Application.get_env(:spotify_re_discoverer, :spotify)[:client_secret]
+  defp client_id, do: Application.get_env(:spotify_re_discoverer, :spotify)[:client_id]
+  defp client_secret, do: Application.get_env(:spotify_re_discoverer, :spotify)[:client_secret]
 
   defp encoded_credentials, do: Base.encode64("#{client_id()}:#{client_secret()}")
+
+  defp redirect_uri, do: Application.get_env(:spotify_re_discoverer, :spotify)[:redirect_uri]
 end

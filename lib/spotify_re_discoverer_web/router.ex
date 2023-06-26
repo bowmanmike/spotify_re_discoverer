@@ -24,7 +24,12 @@ defmodule SpotifyReDiscovererWeb.Router do
   scope "/", SpotifyReDiscovererWeb do
     pipe_through :browser
 
-    live "/", DashboardLive
+    live "/", UnauthenticatedLive
+
+    live_session :authenticated,
+      on_mount: [{SpotifyReDiscovererWeb.UserAuth, :ensure_authenticated}] do
+      live "/dashboard", DashboardLive
+    end
   end
 
   # Other scopes may use custom stacks.

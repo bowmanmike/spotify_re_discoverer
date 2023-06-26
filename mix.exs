@@ -68,12 +68,18 @@ defmodule SpotifyReDiscoverer.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.migrate": ["ecto.migrate", &ecto_dump/1],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "ecto.rollback": ["ecto.rollback", &ecto_dump/1],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
+  end
+
+  defp ecto_dump(_args) do
+    if Mix.env() == :dev, do: Mix.Task.run("ecto.dump")
   end
 end

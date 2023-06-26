@@ -27,9 +27,9 @@ defmodule SpotifyReDiscoverer.SpotifyFixtures do
   end
 
   @doc """
-  Generate a user.
+  Generate a spotify_user.
   """
-  def user_fixture(attrs \\ %{}) do
+  def spotify_user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
       |> Enum.into(%{

@@ -23,8 +23,6 @@ defmodule SpotifyReDiscovererWeb.Components.ConnectSpotifyButton do
   end
 
   def handle_event("connect", _params, socket) do
-    IO.puts(Client.authorize_url())
-
     socket
     |> redirect(external: Client.authorize_url())
     |> noreply()

@@ -1,5 +1,5 @@
 defmodule SpotifyReDiscoverer.Spotify.Client do
-  alias SpotifyReDiscoverer.{Accounts, Repo, Spotify}
+  alias SpotifyReDiscoverer.{Accounts, Repo}
 
   @auth_base_url "accounts.spotify.com"
   @api_base_url "api.spotify.com/v1"

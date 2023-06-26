@@ -25,7 +25,7 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
     Spotify.list_spotify_credentials() |> Enum.map(&Spotify.delete_credentials/1)
     IO.inspect(params)
 
-    with :ok <- check_state(params.state),
+    with :ok <- check_state(params["state"]),
          %{body: response_body} <- Client.exchange_code_for_tokens(code),
          credential_params <-
            Map.merge(response_body, %{"user_id" => conn.assigns.current_user.id}),
@@ -34,7 +34,7 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
       |> put_flash(:info, "Authentication Successful!")
       |> redirect(to: ~p"/")
     else
-      err -> error(conn, Map.merge(params, error: err))
+      err -> error(conn, Map.merge(params, %{error: err}))
     end
   end
 

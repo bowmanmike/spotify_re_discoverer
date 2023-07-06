@@ -25,7 +25,8 @@ defmodule SpotifyReDiscovererWeb.Router do
     pipe_through :browser
 
     # TODO: Does this *really* need to be a liveview? why not just render a plain html page with a RedirectController, like they do in LiveBeats?
-    live "/", UnauthenticatedLive
+    # live "/", UnauthenticatedLive
+    get "/", RedirectController, :redirect_if_authenticated
 
     live_session :authenticated,
       on_mount: [{SpotifyReDiscovererWeb.UserAuth, :ensure_authenticated}] do
@@ -62,7 +63,7 @@ defmodule SpotifyReDiscovererWeb.Router do
       pipe_through [:browser, :admins_only]
     end
 
-    live_dashboard "/dashboard", metrics: HomepageWeb.Telemetry
+    live_dashboard "/admin/dashboard", metrics: SpotifyReDiscovererWeb.Telemetry
   end
 
   defp admin_basic_auth(conn, _opts) do

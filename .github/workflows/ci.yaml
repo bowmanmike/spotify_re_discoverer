@@ -116,6 +116,9 @@ jobs:
       # Step: Execute the tests.
       - name: Run tests
         run: mix test
+        env:
+          SPOTIFY_CLIENT_ID: "client_id"
+          SPOTIFY_CLIENT_SECRET: "client_secret"
 
   # TODO: This is failing with unauthorized. Will need to deploy manually for now
   deploy:

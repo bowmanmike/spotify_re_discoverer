@@ -1,4 +1,8 @@
 defmodule SpotifyReDiscoverer.Spotify.Client do
+  @moduledoc """
+  Core module for all interaction with the Spotify Web API
+  """
+
   alias SpotifyReDiscoverer.{Accounts, Repo}
 
   @auth_base_url "accounts.spotify.com"
@@ -10,6 +14,10 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
 
   def exchange_code_for_tokens(code) do
     token_url() |> Req.post!(form: token_form_data(code), headers: token_headers())
+  end
+
+  def refresh_token(code) do
+    token_url() |> Req.post!(form: refresh_token_data(code), headers: token_headers())
   end
 
   def get_user(%Accounts.User{} = user) do
@@ -50,17 +58,9 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
       |> URI.to_string()
 
     get_all_pages([], url, %{"Authorization" => "Bearer #{user_token}"})
-    # url
-    # |> Req.get!(headers: %{"Authorization" => "Bearer #{user_token}"})
-    # |> Map.get(:body)
-    # |> Enum.reduce(fn
-    #   %{"next" => nil} = resp ->
-    #     resp["items"]
-    #     %{"next" => next_url} = Req.get!(headers: %{"Authorization" => "Bearer #{user_token}"})
-    # end)
-
-    # if body["next"] != nil, there's more to grab
   end
+
+  def get_all_pages(items \\ [], url, headers)
 
   def get_all_pages(items, nil, _headers) do
     items
@@ -68,7 +68,7 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
 
   def get_all_pages(items, url, headers) do
     body = url |> Req.get!(headers: headers) |> Map.get(:body)
-    new_items = Map.get(body, "items")
+    new_items = Map.get(body, "items", [])
     next_url = Map.get(body, "next")
 
     # probably better to do this by sending messages
@@ -111,6 +111,13 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
       code: code,
       redirect_uri: redirect_uri(),
       grant_type: "authorization_code"
+    }
+  end
+
+  def refresh_token_data(code) do
+    %{
+      refresh_token: code,
+      grant_type: "refresh_token"
     }
   end
 

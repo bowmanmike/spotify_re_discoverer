@@ -1,8 +1,8 @@
 defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
   use SpotifyReDiscovererWeb, :controller
 
-  alias SpotifyReDiscoverer.Spotify.Client
   alias SpotifyReDiscoverer.Spotify
+  alias SpotifyReDiscoverer.Spotify.Client
 
   require Logger
 
@@ -22,8 +22,7 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
     #        I don't need to go back to the live view
 
     # TODO: this is temporary
-    Spotify.list_spotify_credentials() |> Enum.map(&Spotify.delete_credentials/1)
-    IO.inspect(params)
+    Spotify.list_spotify_credentials() |> Enum.each(&Spotify.delete_credentials/1)
 
     with :ok <- check_state(params["state"]),
          %{body: response_body} <- Client.exchange_code_for_tokens(code),
@@ -38,9 +37,8 @@ defmodule SpotifyReDiscovererWeb.Spotify.AuthenticationController do
     end
   end
 
-  def authenticated(conn, params) do
+  def authenticated(conn, _params) do
     # this is never called
-    IO.inspect(params, label: :authenticated)
 
     conn
     |> put_flash(:info, "Something is happening...")

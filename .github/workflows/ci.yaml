@@ -130,3 +130,5 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           MIX_ENV: "prod"
+          SPOTIFY_CLIENT_ID: "client_id"
+          SPOTIFY_CLIENT_SECRET: "client_secret"

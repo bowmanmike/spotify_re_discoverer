@@ -41,11 +41,38 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
       %URI{
         scheme: "https",
         host: @api_base_url,
-        path: "/me/playlists"
+        path: "/me/playlists",
+        query:
+          URI.encode_query(%{
+            limit: 20
+          })
       }
       |> URI.to_string()
 
-    Req.get!(url, headers: %{"Authorization" => "Bearer #{user_token}"}).body
+    get_all_pages([], url, %{"Authorization" => "Bearer #{user_token}"})
+    # url
+    # |> Req.get!(headers: %{"Authorization" => "Bearer #{user_token}"})
+    # |> Map.get(:body)
+    # |> Enum.reduce(fn
+    #   %{"next" => nil} = resp ->
+    #     resp["items"]
+    #     %{"next" => next_url} = Req.get!(headers: %{"Authorization" => "Bearer #{user_token}"})
+    # end)
+
+    # if body["next"] != nil, there's more to grab
+  end
+
+  def get_all_pages(items, nil, _headers) do
+    items
+  end
+
+  def get_all_pages(items, url, headers) do
+    body = url |> Req.get!(headers: headers) |> Map.get(:body)
+    new_items = Map.get(body, "items")
+    next_url = Map.get(body, "next")
+
+    # probably better to do this by sending messages
+    get_all_pages(new_items ++ items, next_url, headers)
   end
 
   defp secure_random_string do

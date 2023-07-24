@@ -43,7 +43,7 @@ defmodule SpotifyReDiscovererWeb.DashboardLive do
     playlists = Client.get_all_playlists(socket.assigns.current_user)
 
     socket
-    |> assign(:playlists, Map.get(playlists, "items"))
+    |> assign(:playlists, playlists)
     |> noreply()
   end
 end

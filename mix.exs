@@ -33,7 +33,7 @@ defmodule SpotifyReDiscoverer.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 3.0"},
-      {:credo, "~> 1.7.0"},
+      {:credo, "~> 1.7.0", only: [:dev, :test], runtime: false},
       {:ecto_psql_extras, "~> 0.6"},
       {:ecto_sql, "~> 3.10"},
       {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},

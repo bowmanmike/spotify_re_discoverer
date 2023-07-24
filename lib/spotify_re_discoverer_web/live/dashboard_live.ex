@@ -2,7 +2,7 @@ defmodule SpotifyReDiscovererWeb.DashboardLive do
   use SpotifyReDiscovererWeb, :live_view
 
   alias SpotifyReDiscovererWeb.Components.ConnectSpotifyButton
-  alias SpotifyReDiscoverer.Accounts
+  alias SpotifyReDiscoverer.{Accounts, Spotify}
   alias SpotifyReDiscoverer.Spotify.Client
 
   def render(assigns) do
@@ -10,7 +10,11 @@ defmodule SpotifyReDiscovererWeb.DashboardLive do
     <p>Home</p>
     <%= if @current_user do %>
       <p><%= @current_user.email %></p>
-      <.live_component module={ConnectSpotifyButton} id="spotify-button-dashboard" />
+      <.live_component
+        :if={!@current_user.spotify_credentials}
+        module={ConnectSpotifyButton}
+        id="spotify-button-dashboard"
+      />
 
       <.button phx-click="get_playlists">Fetch Playlists</.button>
       <ul>
@@ -23,7 +27,11 @@ defmodule SpotifyReDiscovererWeb.DashboardLive do
   end
 
   def mount(_params, session, socket) do
-    current_user = Accounts.get_user_by_session_token(Map.get(session, "user_token", ""))
+    current_user =
+      session
+      |> Map.get("user_token", "")
+      |> Accounts.get_user_by_session_token()
+      |> Spotify.preload_credentials()
 
     socket
     |> assign(:current_user, current_user)

@@ -4,6 +4,8 @@ defmodule SpotifyReDiscoverer.Spotify do
   """
 
   import Ecto.Query, warn: false
+
+  alias SpotifyReDiscoverer.Accounts
   alias SpotifyReDiscoverer.Repo
 
   alias SpotifyReDiscoverer.Spotify.Credentials
@@ -197,4 +199,6 @@ defmodule SpotifyReDiscoverer.Spotify do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def preload_credentials(%Accounts.User{} = user), do: Repo.preload(user, :spotify_credentials)
 end

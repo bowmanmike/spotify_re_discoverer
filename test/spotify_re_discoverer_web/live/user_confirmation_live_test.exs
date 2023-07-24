@@ -55,8 +55,10 @@ defmodule SpotifyReDiscovererWeb.UserConfirmationLiveTest do
                "User confirmation link is invalid or it has expired"
 
       # when logged in
+      conn = build_conn()
+
       {:ok, lv, _html} =
-        build_conn()
+        conn
         |> log_in_user(user)
         |> live(~p"/users/confirm/#{token}")
 

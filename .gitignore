@@ -35,3 +35,4 @@ spotify_re_discoverer-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.env.json

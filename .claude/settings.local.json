@@ -10,7 +10,10 @@
       "Bash(mise current:*)",
       "Bash(mise ls-remote:*)",
       "Bash(mise use:*)",
-      "Bash(zsh:*)"
+      "Bash(zsh:*)",
+      "WebFetch(domain:developer.spotify.com)",
+      "Bash(mix credo:*)",
+      "Bash(mix phx.server:*)"
     ],
     "deny": []
   }

@@ -60,6 +60,41 @@ defmodule SpotifyReDiscoverer.Spotify.Client do
     get_all_pages([], url, %{"Authorization" => "Bearer #{user_token}"})
   end
 
+  def get_recently_played(%Accounts.User{} = user, opts \\ []) do
+    user_token =
+      user
+      |> Repo.preload(:spotify_credentials)
+      |> Map.get(:spotify_credentials)
+      |> Map.get(:access_token)
+
+    query_params = %{
+      limit: Keyword.get(opts, :limit, 50)
+    }
+
+    query_params =
+      case Keyword.get(opts, :after) do
+        nil -> query_params
+        after_timestamp -> Map.put(query_params, :after, after_timestamp)
+      end
+
+    query_params =
+      case Keyword.get(opts, :before) do
+        nil -> query_params
+        before_timestamp -> Map.put(query_params, :before, before_timestamp)
+      end
+
+    url =
+      %URI{
+        scheme: "https",
+        host: @api_base_url,
+        path: "/me/player/recently-played",
+        query: URI.encode_query(query_params)
+      }
+      |> URI.to_string()
+
+    Req.get!(url, headers: %{"Authorization" => "Bearer #{user_token}"}).body
+  end
+
   def get_all_pages(items \\ [], url, headers)
 
   def get_all_pages(items, nil, _headers) do
